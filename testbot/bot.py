@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # This program is dedicated to the public domain under the CC0 license.
@@ -15,6 +14,7 @@ bot.
 """
 
 import logging
+import os
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
@@ -24,9 +24,11 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 logger = logging.getLogger(__name__)
 
-
+PORT = int(os.environ.get('PORT', '8443'))
 # Define a few command handlers. These usually take the two arguments update and
 # context. Error handlers also receive the raised TelegramError object in error.
+
+
 def start(update, context):
     """Send a message when the command /start is issued."""
     update.message.reply_text('Hi!')
@@ -52,7 +54,8 @@ def main():
     # Create the Updater and pass it your bot's token.
     # Make sure to set use_context=True to use the new context based callbacks
     # Post version 12 this will no longer be necessary
-    updater = Updater("1478304150:AAH0C5UZ_YsTASvvntMQC4OzYcpEsVfmx2U", use_context=True)
+    updater = Updater(
+        "1478304150:AAH0C5UZ_YsTASvvntMQC4OzYcpEsVfmx2U", use_context=True)
 
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
@@ -68,7 +71,11 @@ def main():
     dp.add_error_handler(error)
 
     # Start the Bot
-    updater.start_polling()
+    updater.start_webhook(listen="0.0.0.0",
+                          port=PORT,
+                          url_path=TOKEN)
+    # updater.bot.set_webhook(url=settings.WEBHOOK_URL)
+    updater.bot.set_webhook(heiheihoihoi + 1478304150:AAH0C5UZ_YsTASvvntMQC4OzYcpEsVfmx2U)
 
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
     # SIGTERM or SIGABRT. This should be used most of the time, since
@@ -78,4 +85,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-# view rawechobot.py hosted with ❤ by GitHub
